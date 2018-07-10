@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "rosinlog": {
+    "Angular-6-Base-Project": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/rosinlog",
+            "outputPath": "dist/Angular-6-Base-Project",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -50,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "rosinlog:build"
+            "browserTarget": "Angular-6-Base-Project:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "rosinlog:build:production"
+              "browserTarget": "Angular-6-Base-Project:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "rosinlog:build"
+            "browserTarget": "Angular-6-Base-Project:build"
           }
         },
         "test": {
@@ -95,7 +95,7 @@
         }
       }
     },
-    "rosinlog-e2e": {
+    "Angular-6-Base-Project-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +103,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "rosinlog:serve"
+            "devServerTarget": "Angular-6-Base-Project:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "rosinlog:serve:production"
+              "devServerTarget": "Angular-6-Base-Project:serve:production"
             }
           }
         },
@@ -123,5 +123,5 @@
       }
     }
   },
-  "defaultProject": "rosinlog"
+  "defaultProject": "Angular-6-Base-Project"
 }
