@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 This project includes FontAwesome 5.1.0, Bootstrap 4.1.1, JQuery Slim 3.3.1.
 
-This project is setup with routing, statistics, authentication, firebase database connection, error handling, loading spinners, and a dashboard and settings page.
+This project is setup with routing, statistics, authentication, firebase database connection, error handling, loading spinners, and a dashboard page.
 
 ## Development server
 

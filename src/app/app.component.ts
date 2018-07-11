@@ -7,5 +7,8 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    constructor(private databaseService:DatabaseService, private authService:AuthService) { }
+  private showSpinner:boolean = true;
+  constructor(private databaseService: DatabaseService, private authService: AuthService) {
+	  this.showSpinner = false;
+  }
 }

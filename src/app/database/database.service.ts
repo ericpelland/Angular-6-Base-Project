@@ -10,4 +10,35 @@ export class DatabaseService {
 
   }
 
+  public getCollection(collectionName, a: string = '1', b: any = '==', c: string = '1', callback) {    //name == 'eric'
+    this.afs.collection(collectionName, ref => ref.where(a, b, c)).valueChanges().subscribe(result => {
+      if (callback) {
+        callback(result);
+      }
+    });
+  }
+
+  public addDocument(collectionName, document, callback) {
+    let that = this;
+    this.afs.collection(collectionName).add(document).then(function(docRef) {
+      document.id = docRef.id;
+      that.afs.collection(collectionName).doc(docRef.id).set(document);
+      if (callback) {
+        callback();
+      }
+    }).catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
+  }
+
+  public updateDocument(collectionName, document, callback) {
+    let that = this;
+	that.afs.collection(collectionName).doc(document.id).set(document).then(function(){
+		if (callback) {
+          callback();
+        }
+	}).catch(function(error){
+		console.error("Error adding document: ", error);
+	});
+  }
 }
