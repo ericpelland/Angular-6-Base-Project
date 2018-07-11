@@ -4,6 +4,8 @@ import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StatsService } from '../../stats/stats.service';
 import { ErrorService } from '../../error/error.service';
+import { DatabaseService } from '../../database/database.service';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-register',
@@ -21,6 +23,7 @@ export class RegisterComponent {
     private router: Router,
     private statsService: StatsService,
     private errorService: ErrorService,
+    private databaseService: DatabaseService,
     private fb: FormBuilder
   ) {
     this.createForm();
@@ -36,7 +39,7 @@ export class RegisterComponent {
   tryFacebookLogin() {
     this.authService.doFacebookLogin()
       .then(res => {
-        this.registrationSuccessful()
+        this.registrationSuccessful(res.user)
       }, err => this.handleError(err)
       )
   }
@@ -44,7 +47,7 @@ export class RegisterComponent {
   tryTwitterLogin() {
     this.authService.doTwitterLogin()
       .then(res => {
-        this.registrationSuccessful()
+        this.registrationSuccessful(res.user)
       }, err => this.handleError(err)
       )
   }
@@ -52,7 +55,7 @@ export class RegisterComponent {
   tryGoogleLogin() {
     this.authService.doGoogleLogin()
       .then(res => {
-        this.registrationSuccessful()
+        this.registrationSuccessful(res.user)
       }, err => this.handleError(err)
       )
   }
@@ -60,19 +63,29 @@ export class RegisterComponent {
   tryRegister(value) {
     this.authService.doRegister(value)
       .then(res => {
-        this.registrationSuccessful()
+        this.registrationSuccessful(res.user)
       }, err => this.handleError(err)
-  	)
+      )
   }
 
-  private registrationSuccessful() {
+  private registrationSuccessful(user) {
+    let userId = user.uid;
+	let email = user.email;
     // TODO: check that user has not been logged. if they have add a log for logging in
-    this.statsService.insertStat('register', '1');
-    this.errorMessage = "";
-    this.successMessage = "Your account has been created, redirecting.";
-    setTimeout(function() {
-      this.router.navigate(['/dashboard']);
-    }, 500);
+    this.databaseService.getCollection('users', 'userId', '==', userId, data => {
+      if (data.length == 0) {
+        this.statsService.insertStat('register', '1', userId);
+        let document:User = {
+          role: 'user',
+          userId: userId,
+		  email: email,
+		  registerTime: new Date().getTime().toString()
+        };
+        this.databaseService.addDocument('users', document, null);
+      }
+    });
+
+    this.router.navigate(['/dashboard']);
   }
 
   private handleError(error) {

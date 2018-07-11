@@ -35,7 +35,7 @@ export class LoginComponent {
   tryFacebookLogin() {
     this.authService.doFacebookLogin()
       .then(res => {
-        this.loginSuccessful();
+        this.loginSuccessful(res.user.uid);
       }), err => {
         this.handleError(err);
       }
@@ -44,7 +44,7 @@ export class LoginComponent {
   tryTwitterLogin() {
     this.authService.doTwitterLogin()
       .then(res => {
-        this.loginSuccessful();
+        this.loginSuccessful(res.user.uid);
       }), err => {
         this.handleError(err);
       }
@@ -53,7 +53,7 @@ export class LoginComponent {
   tryGoogleLogin() {
     this.authService.doGoogleLogin()
       .then(res => {
-        this.loginSuccessful();
+        this.loginSuccessful(res.user.uid);
       }), err => {
         this.handleError(err);
       }
@@ -62,7 +62,7 @@ export class LoginComponent {
   tryLogin(value) {
     this.authService.doLogin(value)
       .then(res => {
-        this.loginSuccessful();
+        this.loginSuccessful(res.user.uid);
       }, err => {
         this.handleError(err);
       })
@@ -73,9 +73,8 @@ export class LoginComponent {
     this.errorService.logError(error);
   }
 
-  private loginSuccessful() {
-    this.statsService.insertStat('login', '1');
-    console.log('authenticated');
+  private loginSuccessful(userId) {
+    this.statsService.insertStat('login', '1', userId);
     this.router.navigate(['/dashboard']);
   }
 }

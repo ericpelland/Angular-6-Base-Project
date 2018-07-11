@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
+	public isAdmin = false;
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
-
+	  this.authService.checkAdminPriv((result) => {this.isAdmin = result})
   }
 
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatabaseService } from '../database/database.service';
 import { StatsService } from '../stats/stats.service';
-
+import { Error } from '../interfaces/error';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +19,10 @@ export class ErrorService {
 	} else {
 		errorString = error.toString();
 	}
-    let document = {
+    let document:Error = {
       'error': errorString,
       'userId': '',
-	  'time': new Date().getTime()
+	  'time': new Date().getTime().toString()
     };
     this.databaseService.addDocument('errors', document, function() {
       console.log('Error Added');

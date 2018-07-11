@@ -6,11 +6,13 @@ import * as firebase from 'firebase/app';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 export class AuthService {
   public isAdmin = false;
-  constructor(private router: Router, public afAuth: AngularFireAuth) {
+  public user;
+  constructor(private databaseService: DatabaseService, private router: Router, public afAuth: AngularFireAuth) {
 
   }
 
@@ -94,10 +96,23 @@ export class AuthService {
     });
   }
 
+  public checkAdminPriv(callback) {
+    this.databaseService.getCollection('users', 'userId', '==', this.user.uid, data => {
+      if (data.length > 0) {
+        if (data[0].role == 'admin') {
+          callback(true);
+		  return;
+        }
+      }
+	  callback(false);
+    });
+  }
+
   public getCurrentUser() {
     return new Promise<any>((resolve, reject) => {
-      var user = firebase.auth().onAuthStateChanged(function(user) {
+      var user = firebase.auth().onAuthStateChanged(user => {
         if (user) {
+          this.user = user;
           resolve(user);
         } else {
           reject('No user logged in');
