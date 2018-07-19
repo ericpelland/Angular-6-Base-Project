@@ -1,6 +1,6 @@
 This project is still in the beginning stages of development.  To test fillout the required firebase authentication information in the environment file.
 
-The purpose of this project is to give a good starting point to most web apps.  I have integrated with firebase authentication, and the firebase database, implemented routing, route guards, and very simple statistics and error handling/storing.
+The purpose of this project is to give a good starting point to most web apps.  With only front end technologies this project can do most task a web app will need.  You can safely interact with the database and handle authentication without the need of a backend.  I have integrated with firebase authentication, and the firebase database, implemented routing, route guards, and very simple statistics and error handling/storing.
 
 # Base Project
 
