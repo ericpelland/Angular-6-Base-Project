@@ -1,3 +1,7 @@
+This project is still in the beginning stages development.  To test fillout the required firebase authentication information in the environment file.
+
+The purpose of this project is to give a good starting point to most web apps.  I have integrated with firebase authentication, and the firebase database, implemented routing, route guards, and very simple statistics and error handling/storing.
+
 # Base Project
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
