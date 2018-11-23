@@ -20,25 +20,40 @@ export class DatabaseService {
 
   public addDocument(collectionName, document, callback) {
     let that = this;
-    this.afs.collection(collectionName).add(document).then(function(docRef) {
+    this.afs.collection(collectionName).add(document).then(function (docRef) {
       document.id = docRef.id;
       that.afs.collection(collectionName).doc(docRef.id).set(document);
       if (callback) {
         callback();
       }
-    }).catch(function(error) {
+    }).catch(function (error) {
+      this.errorService.logError(error);
       console.error("Error adding document: ", error);
     });
   }
 
+  public getDocument<T>(collectionName, documentId, callback) {
+    let that = this;
+    let itemDoc = this.afs.doc<T>('items/1');
+    if (callback) {
+      callback(itemDoc.valueChanges());
+    }
+  }
+
+  public getDocuments(collectionName) {
+    let that = this;
+    return this.afs.collection(collectionName).valueChanges();
+  }
+
   public updateDocument(collectionName, document, callback) {
     let that = this;
-	that.afs.collection(collectionName).doc(document.id).set(document).then(function(){
-		if (callback) {
-          callback();
-        }
-	}).catch(function(error){
-		console.error("Error adding document: ", error);
-	});
+    that.afs.collection(collectionName).doc(document.id).set(document).then(function () {
+      if (callback) {
+        callback();
+      }
+    }).catch(function (error) {
+      console.error("Error adding document: ", error);
+      this.errorService.logError(error);
+    });
   }
 }

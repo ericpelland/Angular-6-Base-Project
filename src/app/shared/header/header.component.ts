@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, SimpleChange, OnChanges } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 
@@ -8,11 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-	public isAdmin = false;
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
-	  this.authService.checkAdminPriv((result) => {this.isAdmin = result})
+
   }
 
 }

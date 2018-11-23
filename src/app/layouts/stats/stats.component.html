@@ -1,0 +1,59 @@
+<h2>Errors</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Message</th>
+      <th scope="col">Time</th>
+      <th scope="col">UserId</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let error of errors">
+      <td>{{error.error}}</td>
+      <td>{{error.time}}</td>
+      <td>{{error.userId}}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<h2>Users</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Role</th>
+      <th scope="col">UserId</th>
+      <th scope="col">Email</th>
+      <th scope="col">Register Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.role}}</td>
+      <td>{{user.userId}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.registerTime}}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<h2>Stats</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Value</th>
+      <th scope="col">UserId</th>
+      <th scope="col">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let stat of stats">
+      <td>{{stat.statName}}</td>
+      <td>{{stat.value}}</td>
+      <td>{{stat.userId}}</td>
+      <td>{{stat.time}}</td>
+    </tr>
+  </tbody>
+</table>

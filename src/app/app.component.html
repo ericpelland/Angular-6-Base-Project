@@ -1,2 +1,6 @@
 <app-spinner *ngIf="showSpinner"></app-spinner>
-<router-outlet *ngIf="!showSpinner"></router-outlet>
+<div *ngIf="!showSpinner" id="app-main-container">
+    <app-header></app-header>
+    <router-outlet *ngIf="!showSpinner"></router-outlet>
+    <app-footer></app-footer>
+</div>

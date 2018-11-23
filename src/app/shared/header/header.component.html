@@ -1,2 +1,25 @@
-<button (click)='authService.doLogout()'>Logout</button>
-<div *ngIf="isAdmin">ADMIN</div>
+<nav class="navbar navbar-default">
+    <div class="nav-container-custom">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" routerLink="/">WebSiteName</a>
+        </div>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="#" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+            </li>
+            <li class="nav-item" *ngIf="authService.isAdmin">
+                <a class="nav-link" href="#" routerLink="/stats" routerLinkActive="active">Stats</a>
+            </li>
+
+
+
+
+            <li class="nav-item nav-item-right" *ngIf="authService.isLoggedIn">
+                <a class="nav-link" href="#" routerLink="/login" (click)='authService.doLogout()'>Logout</a>
+            </li>
+            <li class="nav-item nav-item-right" *ngIf="!authService.isLoggedIn">
+                <a class="nav-link" href="#" routerLink="/login">Log In</a>
+            </li>
+        </ul>
+    </div>
+</nav>

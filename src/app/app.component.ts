@@ -7,8 +7,13 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  private showSpinner:boolean = true;
+  private showSpinner: boolean = true;
   constructor(private databaseService: DatabaseService, private authService: AuthService) {
-	  this.showSpinner = false;
+    this.authService.getCurrentUser()
+      .then(user => {
+        this.showSpinner = false;
+      }, err => {
+        this.showSpinner = false;
+      })
   }
 }

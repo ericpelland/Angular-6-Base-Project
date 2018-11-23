@@ -36,22 +36,6 @@ export class RegisterComponent {
     });
   }
 
-  tryFacebookLogin() {
-    this.authService.doFacebookLogin()
-      .then(res => {
-        this.registrationSuccessful(res.user)
-      }, err => this.handleError(err)
-      )
-  }
-
-  tryTwitterLogin() {
-    this.authService.doTwitterLogin()
-      .then(res => {
-        this.registrationSuccessful(res.user)
-      }, err => this.handleError(err)
-      )
-  }
-
   tryGoogleLogin() {
     this.authService.doGoogleLogin()
       .then(res => {
@@ -70,16 +54,16 @@ export class RegisterComponent {
 
   private registrationSuccessful(user) {
     let userId = user.uid;
-	let email = user.email;
+    let email = user.email;
     // TODO: check that user has not been logged. if they have add a log for logging in
     this.databaseService.getCollection('users', 'userId', '==', userId, data => {
       if (data.length == 0) {
         this.statsService.insertStat('register', '1', userId);
-        let document:User = {
+        let document: User = {
           role: 'user',
           userId: userId,
-		  email: email,
-		  registerTime: new Date().getTime().toString()
+          email: email,
+          registerTime: new Date().getTime().toString()
         };
         this.databaseService.addDocument('users', document, null);
       }

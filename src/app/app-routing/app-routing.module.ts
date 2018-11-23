@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from '../layouts/dashboard/dashboard.component';
 import { LoginComponent } from '../auth/login/login.component';
 import { RegisterComponent } from '../auth/register/register.component';
+import { StatsComponent } from '../layouts/stats/stats.component';
 import { AuthGuardService as AuthGuard } from '../auth/auth-guard.service';
+import { AdminAuthGuardService as AdminAuthGuard } from '../auth/admin-auth-guard.service';
 
 const routes: Routes = [
     {
@@ -14,7 +16,7 @@ const routes: Routes = [
     {
         path: 'dashboard',
         component: DashboardComponent,
-        canActivate: [AuthGuard]
+        //canActivate: [AuthGuard]
     },
     {
         path: 'login',
@@ -23,6 +25,11 @@ const routes: Routes = [
     {
         path: 'register',
         component: RegisterComponent,
+    },
+    {
+        path: 'stats',
+        component: StatsComponent,
+        canActivate: [AdminAuthGuard]
     },
 ];
 

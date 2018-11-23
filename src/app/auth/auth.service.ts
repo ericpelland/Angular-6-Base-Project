@@ -12,38 +12,9 @@ import { DatabaseService } from '../database/database.service';
 export class AuthService {
   public isAdmin = false;
   public user;
+  public isLoggedIn = false;
   constructor(private databaseService: DatabaseService, private router: Router, public afAuth: AngularFireAuth) {
 
-  }
-
-  public doFacebookLogin() {
-    return new Promise<any>((resolve, reject) => {
-      let provider = new firebase.auth.FacebookAuthProvider();
-      this.afAuth.auth
-        .signInWithPopup(provider)
-        .then(res => {
-          this.router.navigate(['/dashboard']);
-          resolve(res);
-        }, err => {
-          console.log(err);
-          reject(err);
-        })
-    })
-  }
-
-  public doTwitterLogin() {
-    return new Promise<any>((resolve, reject) => {
-      let provider = new firebase.auth.TwitterAuthProvider();
-      this.afAuth.auth
-        .signInWithPopup(provider)
-        .then(res => {
-          this.router.navigate(['/dashboard']);
-          resolve(res);
-        }, err => {
-          console.log(err);
-          reject(err);
-        })
-    })
   }
 
   public doGoogleLogin() {
@@ -54,6 +25,7 @@ export class AuthService {
       this.afAuth.auth
         .signInWithPopup(provider)
         .then(res => {
+          this.isLoggedIn = true;
           this.router.navigate(['/dashboard']);
           resolve(res);
         }, err => {
@@ -77,6 +49,7 @@ export class AuthService {
     return new Promise<any>((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(value.email, value.password)
         .then(res => {
+          this.isLoggedIn = true;
           this.router.navigate(['/dashboard']);
           resolve(res);
         }, err => reject(err))
@@ -87,6 +60,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       if (firebase.auth().currentUser) {
         this.afAuth.auth.signOut()
+        this.isLoggedIn = false;
         this.router.navigate(['/login']);
         resolve();
       }
@@ -101,10 +75,10 @@ export class AuthService {
       if (data.length > 0) {
         if (data[0].role == 'admin') {
           callback(true);
-		  return;
+          return;
         }
       }
-	  callback(false);
+      callback(false);
     });
   }
 
@@ -112,9 +86,16 @@ export class AuthService {
     return new Promise<any>((resolve, reject) => {
       var user = firebase.auth().onAuthStateChanged(user => {
         if (user) {
+          this.isLoggedIn = true;
           this.user = user;
-          resolve(user);
+          this.checkAdminPriv(function (result) {
+            this.isAdmin = result;
+            resolve(user);
+          }.bind(this))
         } else {
+          this.isLoggedIn = false;
+          this.user = null;
+          this.isAdmin = false;
           reject('No user logged in');
         }
       })

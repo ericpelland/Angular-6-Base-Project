@@ -1,0 +1,9 @@
+.nav-container-custom{
+    width: 100%;
+    display: flex;
+}
+
+.nav-item-right {
+    right: 10px;
+    position: absolute;
+}

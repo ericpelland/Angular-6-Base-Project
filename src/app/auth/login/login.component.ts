@@ -32,24 +32,6 @@ export class LoginComponent {
     });
   }
 
-  tryFacebookLogin() {
-    this.authService.doFacebookLogin()
-      .then(res => {
-        this.loginSuccessful(res.user.uid);
-      }), err => {
-        this.handleError(err);
-      }
-  }
-
-  tryTwitterLogin() {
-    this.authService.doTwitterLogin()
-      .then(res => {
-        this.loginSuccessful(res.user.uid);
-      }), err => {
-        this.handleError(err);
-      }
-  }
-
   tryGoogleLogin() {
     this.authService.doGoogleLogin()
       .then(res => {

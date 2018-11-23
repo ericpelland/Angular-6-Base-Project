@@ -23,28 +23,30 @@ import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { DatabaseService } from './database/database.service';
 import { StatsService } from './stats/stats.service';
+import { StatsComponent } from './layouts/stats/stats.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
+    StatsComponent,
   ],
   imports: [
-	AppRoutingModule,
+    AppRoutingModule,
     BrowserModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
     ReactiveFormsModule,
-	SharedModule,
-	AuthModule,
+    SharedModule,
+    AuthModule,
   ],
   providers: [
     AuthService,
     AuthGuardService,
     DatabaseService,
-	ErrorService,
-	StatsService,
+    ErrorService,
+    StatsService,
   ],
   bootstrap: [AppComponent]
 })
